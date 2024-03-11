@@ -124,9 +124,10 @@ public class Main {
                         cardsByType.computeIfAbsent(type, k -> new ArrayList<>()).add(card);
                     }
                     for (Map.Entry<String, List<String>> entry : cardsByType.entrySet()) {
-                        System.out.println("Tipo: " + entry.getKey());
+                        int typeCount = entry.getValue().size();
+                        System.out.println("Tipo: " + entry.getKey() + ", Cantidad: " + typeCount);
                         for (String card : entry.getValue()) {
-                            System.out.println("Carta: " + card);
+                            System.out.println("\tCarta: " + card);
                         }
                     }
                     break;
