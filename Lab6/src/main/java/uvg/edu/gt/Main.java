@@ -1,9 +1,5 @@
 import java.io.*;
 import java.util.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
 
 // Interfaz para el Factory
 interface MapFactory {
@@ -111,13 +107,17 @@ public class Main {
                     break;
                 case 3:
                     // Mostrar la colección del usuario
-                    for (Map.Entry<String, String> entry : cardMap.entrySet()) {
-                        System.out.println("Carta: " + entry.getKey() + ", Tipo: " + entry.getValue());
+                    Map<String, Integer> cardCount = new HashMap<>();
+                    for (String card : cardMap.keySet()) {
+                        cardCount.put(card, cardCount.getOrDefault(card, 0) + 1);
+                    }
+                    for (Map.Entry<String, Integer> entry : cardCount.entrySet()) {
+                        System.out.println("Carta: " + entry.getKey() + ", Cantidad: " + entry.getValue() + ", Tipo: " + cardMap.get(entry.getKey()));
                     }
                     break;
                 case 4:
                     // Mostrar la colección del usuario ordenada por tipo
-                    Map<String, List<String>> cardsByType = new HashMap<>();
+                    Map<String, List<String>> cardsByType = new TreeMap<>();
                     for (Map.Entry<String, String> entry : cardMap.entrySet()) {
                         String type = entry.getValue();
                         String card = entry.getKey();
@@ -137,10 +137,18 @@ public class Main {
                     }
                     break;
                 case 6:
-                    // Mostrar todas las cartas existentes ordenadas por tipo
-                    TreeMap<String, String> sortedCardMap = new TreeMap<>(cardMap);
-                    for (Map.Entry<String, String> entry : sortedCardMap.entrySet()) {
-                        System.out.println("Carta: " + entry.getKey() + ", Tipo: " + entry.getValue());
+                    // Mostrar todas las cartas existentes ordenadas por tipo y luego por nombre dentro de cada tipo
+                    Map<String, List<String>> sortedCardsByType = new TreeMap<>();
+                    for (Map.Entry<String, String> entry : cardMap.entrySet()) {
+                        String type = entry.getValue();
+                        String card = entry.getKey();
+                        sortedCardsByType.computeIfAbsent(type, k -> new ArrayList<>()).add(card);
+                    }
+                    for (Map.Entry<String, List<String>> entry : sortedCardsByType.entrySet()) {
+                        System.out.println("Tipo: " + entry.getKey());
+                        for (String card : entry.getValue()) {
+                            System.out.println("\tCarta: " + card);
+                        }
                     }
                     break;
                 case 0:
@@ -152,5 +160,3 @@ public class Main {
         }
     }
 }
-
-
