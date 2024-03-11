@@ -107,6 +107,8 @@ public class Main {
                     break;
                 case 3:
                     // Mostrar la colección del usuario
+                    long start = System.currentTimeMillis();
+
                     Map<String, Integer> cardCount = new HashMap<>();
                     for (String card : cardMap.keySet()) {
                         cardCount.put(card, cardCount.getOrDefault(card, 0) + 1);
@@ -114,6 +116,9 @@ public class Main {
                     for (Map.Entry<String, Integer> entry : cardCount.entrySet()) {
                         System.out.println("Carta: " + entry.getKey() + ", Cantidad: " + entry.getValue() + ", Tipo: " + cardMap.get(entry.getKey()));
                     }
+                    long finish = System.currentTimeMillis();
+                    long timeElapsed = finish - start;
+                    System.out.println("Time elapsed: " + timeElapsed + " ms");
                     break;
                 case 4:
                     // Mostrar la colección del usuario ordenada por tipo
